@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            z-index: 10;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 3px solid #ff5e8e;
+        }
+        
+        h1 {
+            color: #d63384;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .name {
+            color: #ff4081;
+            font-size: 3.2rem;
+            font-weight: bold;
+            display: block;
+            margin: 10px 0 30px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .yes-btn {
+            background-color: #ff4081;
+            color: white;
+        }
+        
+        .yes-btn:hover {
+            background-color: #e91e63;
+            transform: scale(1.05);
+        }
+        
+        .no-btn {
+            background-color: #5d6afb;
+            color: white;
+        }
+        
+        .no-btn:hover {
+            background-color: #3f51b5;
+            transform: scale(1.05);
+        }
+        
+        .message {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffecf1, #fff8f8);
+            border-radius: 20px;
+            border-left: 8px solid #ff4081;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message h2 {
+            color: #ff4081;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .message p {
+            font-size: 1.5rem;
+            color: #555;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        
+        .message .heart {
+            color: #ff4081;
+            font-size: 2rem;
+            margin: 0 8px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        .highlight {
+            color: #ff4081;
+            font-weight: bold;
+            font-size: 1.6rem;
+            background-color: #fff0f5;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+        
+        /* Heart balloons */
+        .heart-balloon {
+            position: absolute;
+            font-size: 40px;
+            color: #ff4081;
+            z-index: 1;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+            animation: float 15s infinite linear;
+        }
+        
+        .balloon-string {
+            position: absolute;
+            width: 2px;
+            height: 80px;
+            background-color: #999;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -30px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-15px, -60px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(25px, -30px) rotate(5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .name { font-size: 2.5rem; }
+            .buttons { flex-direction: column; align-items: center; gap: 20px; }
+            .btn { width: 80%; padding: 15px 30px; }
+            .message h2 { font-size: 2rem; }
+            .message p { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heart balloons floating around -->
+    <div id="balloons-container"></div>
+    
+    <div class="container">
+        <h1>Will You Be My Valentine?</h1>
+        <span class="name">Jwalitha Sri ❤️</span>
+        
+        <div class="buttons">
+            <button class="btn yes-btn" id="yesBtn">YES! <i class="fas fa-heart"></i></button>
+            <button class="btn no-btn" id="noBtn">No</button>
+        </div>
+        
+        <div class="message" id="message">
+            <h2><i class="fas fa-heart heart"></i> I Knew You Would Say Yes! <i class="fas fa-heart heart"></i></h2>
+            <p>My Dearest <span class="highlight">Bangaram</span>,</p>
+            <p>You've made me the happiest person today! ❤️</p>
+            <p>I can't wait to celebrate Valentine's Day with you!</p>
+            <p>Let's meet on <span class="highlight">14th February</span> at</p>
+            <p><span class="highlight">Vaibhav Hotel</span> at <span class="highlight">12:00 PM</span>.</p>
+            <p>Looking forward to our special day together! <i class="fas fa-heart heart"></i></p>
+        </div>
+    </div>
+
+    <script>
+        // Create heart balloons
+        const balloonsContainer = document.getElementById('balloons-container');
+        const colors = ['#ff4081', '#ff79a9', '#ff5e8e', '#ff2e7a', '#ff99c2'];
+        
+        for (let i = 0; i < 12; i++) {
+            const balloon = document.createElement('div');
+            balloon.className = 'heart-balloon';
+            balloon.innerHTML = '<i class="fas fa-heart"></i>';
+            
+            // Random position and animation
+            const size = Math.random() * 30 + 30;
+            const left = Math.random() * 100;
+            const animationDuration = Math.random() * 20 + 15;
+            const animationDelay = Math.random() * 5;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            balloon.style.fontSize = `${size}px`;
+            balloon.style.left = `${left}%`;
+            balloon.style.top = `${Math.random() * 100}%`;
+            balloon.style.color = color;
+            balloon.style.animationDuration = `${animationDuration}s`;
+            balloon.style.animationDelay = `${animationDelay}s`;
+            
+            // Add string to balloon
+            const string = document.createElement('div');
+            string.className = 'balloon-string';
+            balloon.appendChild(string);
+            
+            balloonsContainer.appendChild(balloon);
+        }
+        
+        // Button interactions
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const message = document.getElementById('message');
+        
+        // When Yes button is clicked
+        yesBtn.addEventListener('click', function() {
+            message.style.display = 'block';
+            message.classList.add('fade-in');
+            
+            // Hide buttons
+            yesBtn.style.display = 'none';
+            noBtn.style.display = 'none';
+            
+            // Add confetti effect
+            createConfetti();
+            
+            // Play a sound (optional)
+            playCelebrationSound();
+        });
+        
+        // When No button is clicked (make it move away)
+        noBtn.addEventListener('mouseover', function() {
+            // Move the button to a random position
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            
+            // Change the text sometimes
+            const phrases = ['Are you sure?', 'Think again!', 'Really?', 'Please?', 'Try again!'];
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+        });
+        
+        // When No button is clicked (alternative behavior)
+        noBtn.addEventListener('click', function() {
+            // Move the button to a random position
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            
+            // Change the text
+            const phrases = ['Please reconsider!', 'I\'ll be sad!', 'Give me a chance!', 'Pretty please?', 'Say YES instead!'];
+            noBtn.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+            
+            // Make the Yes button bigger
+            yesBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                yesBtn.style.transform = 'scale(1)';
+            }, 300);
+        });
+        
+        // Create confetti effect
+        function createConfetti() {
+            const confettiCount = 150;
+            const container = document.body;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerHTML = '<i class="fas fa-heart"></i>';
+                confetti.style.position = 'absolute';
+                confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.fontSize = `${Math.random() * 20 + 10}px`;
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.top = '-50px';
+                confetti.style.zIndex = '9999';
+                confetti.style.opacity = '0.9';
+                
+                // Random animation
+                const animationDuration = Math.random() * 3 + 2;
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+                
+                // Add keyframes for falling animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 720}deg);
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+        }
+        
+        // Play a celebration sound
+        function playCelebrationSound() {
+            // Create a simple beep sound using Web Audio API
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 523.25; // C note
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 1);
+            } catch (e) {
+                // Audio context not supported, skip sound
+                console.log("Audio not supported in this browser");
+            }
+        }
+        
+        // Make the page interactive on load
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+            
+            // Make balloons move with mouse movement slightly
+            document.addEventListener('mousemove', function(e) {
+                const balloons = document.querySelectorAll('.heart-balloon');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                balloons.forEach((balloon, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const xMove = (x - 0.5) * speed * 10;
+                    const yMove = (y - 0.5) * speed * 10;
+                    
+                    balloon.style.transform = `translate(${xMove}px, ${yMove}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
